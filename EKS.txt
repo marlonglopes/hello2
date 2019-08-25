@@ -13,22 +13,49 @@ provisioning:
   prometheus (node monitor, extract metrics)
   
   
+  EKS cluster
+    eksctl install
+  
+  FLUX
+    eksctl install flux
+    
+  Ingress
+  
+  kubectl apply -f https://raw.githubusercontent.com/kubernetes-sigs/aws-alb-ingress-controller/v1.0.0/docs/examples/rbac-role.yaml
+  kubectl apply -f alb-ingress-controller.yaml
+  
   weave flux
   
+  fluxctl identity --k8s-fwd-ns flux
+  add key to repos
+  
+  Repositories
   
   EKSCTL_EXPERIMENTAL=true eksctl install flux --name test2 --region us-west-2 --git-url=git@github.com:marlonglopes/hello.git --git-email=marlonglopes@gmail.com
+
+  fluxctl list-images --workload=hello:deployment/hello-deployment   --k8s-fwd-ns flux
+   
+  fluxctl automate --workload=hello:deployment/hello-deployment   --k8s-fwd-ns flux
+
+   fluxctl install \
+   --git-user=$marlonglopes \
+   --git-email=marlonglopes@gmail.com \
+   --git-url=git@github.com:marlonglopes/hello.git \
+   --git-path=ops \
+   --namespace=flux | kubectl apply -f -
   
   EKSCTL_EXPERIMENTAL=true eksctl install flux --name test2 --region us-west-2 --git-url=git@github.com:marlonglopes/hello2.git --git-email=marlonglopes@gmail.com
-  
-  
-   fluxctl list-images --workload=hello2:deployment/hello-deployment   --k8s-fwd-ns flux
+    
+  fluxctl list-images --workload=hello2:deployment/hello-deployment   --k8s-fwd-ns flux
    
-    fluxctl automate --workload=hello2:deployment/hello-deployment   --k8s-fwd-ns flux
+  fluxctl automate --workload=hello2:deployment/hello-deployment   --k8s-fwd-ns flux
    
-   export GHUSER="marlonglopes"
+
    fluxctl install \
    --git-user=$marlonglopes \
    --git-email=marlonglopes@gmail.com \
    --git-url=git@github.com:marlonglopes/hello2.git \
    --git-path=ops \
    --namespace=flux | kubectl apply -f -
+   
+
