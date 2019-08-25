@@ -22,3 +22,12 @@ provisioning:
   
   
    fluxctl list-images --workload=hello:deployment/hello-deployment   --k8s-fwd-ns flux
+   
+   
+   export GHUSER="marlonglopes"
+   fluxctl install \
+   --git-user=$marlonglopes \
+   --git-email=marlonglopes@gmail.com \
+   --git-url=git@github.com:marlonglopes/hello2.git \
+   --git-path=ops \
+   --namespace=flux | kubectl apply -f -
