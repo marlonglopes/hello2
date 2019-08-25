@@ -18,6 +18,6 @@ spec:
     spec:
       containers:
       - name: client
-        image: marlonglopes/hello2:0.0.2
+        image: marlonglopes/hello2:0.0.3
         ports:
         - containerPort: 8080
